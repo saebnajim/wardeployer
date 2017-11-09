@@ -1,0 +1,118 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>wardeployer</groupId>
+	<artifactId>wardeployer</artifactId>
+	<version>1</version>
+	<name>wardeployer</name>
+	<description>This project is for deploying war under a list of tomcats by using maven tomcat plugin</description>
+
+
+	<dependencies>
+	
+		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+		<!-- JAXB2.x (which comes with JDK6) make marshalling Java to XML and unmarshalling XML to Java a snap, almost trivial. -->
+		<dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		    <version>2.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.shared/maven-invoker -->
+		<dependency>
+		    <groupId>org.apache.maven.shared</groupId>
+		    <artifactId>maven-invoker</artifactId>
+		    <version>3.0.0</version>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		 <resources>
+	        <resource>
+	           <directory>src/main/resources</directory>
+	        </resource>
+	    </resources>
+	
+		<plugins>
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>deployer.Main</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>./</Class-Path>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<includeScope>compile</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<descriptor>pom_assembly.xml</descriptor>
+				</configuration>
+				<executions>
+					<execution>
+						<id>create-archive</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<ignorePackaging>true</ignorePackaging>
+					<url>${param.from.cmd.tomcat.url}</url>
+					<username>${param.from.cmd.tomcat.userName}</username>
+					<password>${param.from.cmd.tomcat.password}</password>
+					<path>${param.from.cmd.tomcat.path}</path>
+					<update>true</update>
+					<warFile>${param.from.cmd.tomcat.warDir}</warFile>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

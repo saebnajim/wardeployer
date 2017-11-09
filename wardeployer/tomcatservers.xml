@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>  
+<servers id="1">
+	<userName>admin</userName>
+	<password>password</password>
+	<warPathUnderServer>/nextStep</warPathUnderServer>
+	<warDir>C:/Users/snajim/Desktop/nextStep.war</warDir>
+    <server>  
+    	<name>Tomcat 1</name>
+    	<ip>127.0.0.0</ip>
+		<url>http://localhost:8080/manager/text</url>
+		<userName>admin</userName>
+		<password>password</password>
+		<warPathUnderServer>/nextStep</warPathUnderServer>
+		<warDir>C:/Users/snajim/Desktop/nextStep.war</warDir>
+	 </server>
+    <server>  
+    	<name>Tomcat 2</name>
+    	<ip>127.0.0.0</ip>
+		<url>http://localhost:8080/manager/text</url>
+		<userName>admin</userName>
+		<password>password</password>
+		<warPathUnderServer>/nextStep</warPathUnderServer>
+		<warDir>C:/Users/snajim/Desktop/nextStep.war</warDir>
+	 </server> 
+</servers>  

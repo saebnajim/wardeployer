@@ -1,0 +1,22 @@
+
+The aim of this project is to deploy a "war" to a tomcat and wait the result of the deployment.By using maven tomcat plugin this jar can connect to the tomcat and deploy the war.
+MavenInvoker is used to invoke maven pom.xml. All needed "pom.xml" information are passed as parameters.   
+
+Follow these steps for run Deployer
+
+1- Run "package" goal to create  "wardeployer-1-bin.zip"
+2- Unzip "wardeployer-1-bin.zip" to a directory like "C:\Users\snajim\Desktop\saeb\wardeployer-1"
+3- Run cmd and execute these lines 
+   - > cd C:\Users\snajim\Desktop\saeb\wardeployer-1
+   - > java -jar wardeployer-1.jar 
+
+Notes:
+
+- Add following xml to the C:\Users\snajim\.m2\settings.xml
+	<pluginGroups>
+		<pluginGroup>org.apache.tomcat.maven</pluginGroup>
+	</pluginGroups>
+See http://w3cgeek.com/maven-no-plugin-found-for-prefix-tomcat7-in-the-current-project.html
+
+- 	
+ 
